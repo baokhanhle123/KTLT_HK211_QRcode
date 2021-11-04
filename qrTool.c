@@ -1,19 +1,28 @@
 #include <stdio.h>
 #include <string.h>
 
-void splitInfoQR(char *qr_mess, char *stk, char *owner, char *bank, char *create_time)
+struct qrCode
+{
+    char dst[12];
+    char stk[16];
+    char owner[31];
+    char bank[4];
+    char create_time[9];
+};
+
+struct qrCode splitInfoQR(char *qr_mess)
 {
     int qr_mess_length = strlen(qr_mess); // length of qr code
     char *ptr_i;                          //pointer "runner" ~ index
 
-
+    struct qrCode qr; // struct for return
     if (strstr(qr_mess, "BKB") != NULL) // bank()stk()owner()create_time
     {
         //Get bank field
-        strcpy(bank, "BKB");
-
+        strcpy(qr.bank, "BKB");
+        printf("BKB\n");
         //Get stk field
-        ptr_i = stk;
+        ptr_i = qr.stk;
         for (int i = 14; i <= 26; i++)
         {
             *ptr_i = qr_mess[i];
@@ -22,7 +31,7 @@ void splitInfoQR(char *qr_mess, char *stk, char *owner, char *bank, char *create
         *ptr_i = '\0';
 
         //Get owner
-        ptr_i = owner;
+        ptr_i = qr.owner;
         for (int i = 27; i <= (qr_mess_length - 9); i++)
         {
             *ptr_i = qr_mess[i];
@@ -31,7 +40,7 @@ void splitInfoQR(char *qr_mess, char *stk, char *owner, char *bank, char *create
         *ptr_i = '\0';
 
         //Get create_time
-        ptr_i = create_time;
+        ptr_i = qr.create_time;
         for (int i = (qr_mess_length - 8); i <= (qr_mess_length - 7); i++)
         {
             *ptr_i = qr_mess[i];
@@ -52,10 +61,10 @@ void splitInfoQR(char *qr_mess, char *stk, char *owner, char *bank, char *create
     else if (strstr(qr_mess, "KHB") != NULL)
     {
         //Get bank field
-        strcpy(bank, "KHB");
+        strcpy(qr.bank, "KHB");
 
         //Get stk field
-        ptr_i = stk;
+        ptr_i = qr.stk;
         for (int i = 22; i <= 36; i++)
         {
             *ptr_i = qr_mess[i];
@@ -64,7 +73,7 @@ void splitInfoQR(char *qr_mess, char *stk, char *owner, char *bank, char *create
         *ptr_i = '\0';
 
         //Get the owner field
-        ptr_i = owner;
+        ptr_i = qr.owner;
         for (int i = 37; i < qr_mess_length; i++)
         {
             *ptr_i = qr_mess[i];
@@ -73,7 +82,7 @@ void splitInfoQR(char *qr_mess, char *stk, char *owner, char *bank, char *create
         *ptr_i = '\0';
 
         //Get the create_time field
-        ptr_i = create_time;
+        ptr_i = qr.create_time;
         for (int i = 13; i <= 14; i++)
         {
             *ptr_i = qr_mess[i];
@@ -94,10 +103,10 @@ void splitInfoQR(char *qr_mess, char *stk, char *owner, char *bank, char *create
     else if (strstr(qr_mess, "HBB") != NULL)
     {
         //Get bank field
-        strcpy(bank, "HBB");
+        strcpy(qr.bank, "HBB");
 
         //Get the stk field
-        ptr_i = stk;
+        ptr_i = qr.stk;
         for (int i = (qr_mess_length - 17); i <= (qr_mess_length - 10); i++)
         {
             *ptr_i = qr_mess[i];
@@ -106,7 +115,7 @@ void splitInfoQR(char *qr_mess, char *stk, char *owner, char *bank, char *create
         *ptr_i = '\0';
 
         //Get the owner field
-        ptr_i = owner;
+        ptr_i = qr.owner;
         for (int i = 11; i <= (qr_mess_length - 18); i++)
         {
             *ptr_i = qr_mess[i];
@@ -115,7 +124,7 @@ void splitInfoQR(char *qr_mess, char *stk, char *owner, char *bank, char *create
         *ptr_i = '\0';
 
         //Get the create_time field
-        ptr_i = create_time;
+        ptr_i = qr.create_time;
         for (int i = (qr_mess_length - 5); i <= (qr_mess_length - 4); i++)
         {
             *ptr_i = qr_mess[i];
@@ -140,19 +149,20 @@ void splitInfoQR(char *qr_mess, char *stk, char *owner, char *bank, char *create
     }
     else
     {
-        return;
+        ;
     }
+    return qr;
 }
 
-void printInfoQR(char *stk, char *owner, char *bank, char *create_time)
+void printInfoQR(struct qrCode qr)
 {
-    printf("Ngan hang: %s\n", bank);
-    printf("So tai khoan: %s\n", stk);
-    printf("Ten chu tai khoan: %s\n", owner);
+    printf("Ngan hang: %s\n", qr.bank);
+    printf("So tai khoan: %s\n", qr.stk);
+    printf("Ten chu tai khoan: %s\n", qr.owner);
 
     printf("Thoi diem tao QR: ");
-    printf("%c%c/%c%c/", create_time[0], create_time[1], create_time[2], create_time[3]);
-    char *year_field = &create_time[4];
+    printf("%c%c/%c%c/", qr.create_time[0], qr.create_time[1], qr.create_time[2], qr.create_time[3]);
+    char *year_field = &qr.create_time[4];
     if (strlen(year_field) == 4)
         printf("%s", year_field);
     else
@@ -173,20 +183,14 @@ void checkInfoQR()
     //Input QR message
     scanf("%s", qr_mess);
 
-    //Declare QR message field
-    char dst[12] = "00020101021";
-    char stk[16] = "0271001142475";
-    char owner[31] = "0271001142475";
-    char bank[4] = "";
-    char create_time[9] = "220821";
-
-    //split qr messages -> stk + owner + bank + create_time
-    splitInfoQR(qr_mess, stk, owner, bank, create_time);
+    //Declare qr struct
+    struct qrCode qr;
+    //split qr messages -> qRCode struct
+    qr = splitInfoQR(qr_mess);
 
     //print info
-    printInfoQR(stk, owner, bank, create_time);
+    printInfoQR(qr);
 }
-
 
 void convertQR()
 {
