@@ -1,0 +1,123 @@
+#include<stdio.h>
+#include<string.h>
+
+void checkInfoQR(int a )
+{
+    int n;
+    char chuoi[100];
+    scanf("%s",chuoi);
+    n=strlen(chuoi);
+    if (strstr(chuoi,"BKB") != NULL) 
+    {   printf("Ngan hang: BKB \n");
+            printf("So tai khoan: ");
+            for (int i=14 ;i<=26;i++)
+                {
+                    printf("%c",chuoi[i]);
+                }
+            printf("\nTen chu tai khoan: ");
+            for (int i=27 ;i<=(n-9);i++)
+                {
+                    printf("%c",chuoi[i]);
+                }
+            printf("\nThoi diem tao QR: ");
+            for (int i=(n-8);i<=(n-7);i++)
+                {
+                    printf("%c",chuoi[i]);
+                }
+            printf("/");
+            for (int i=(n-6);i<=(n-5);i++)
+                {
+                    printf("%c",chuoi[i]);
+                }
+            printf("/");
+            for (int i=(n-4);i<n ;i++)
+                {
+                    printf("%c",chuoi[i]);
+                }
+    }
+    else    
+    if (strstr(chuoi,"KHB") != NULL) 
+    {   printf("Ngan hang: KHB \n");
+            printf("So tai khoan: ");
+            for (int i=22;i<=36;i++)
+                {
+                    printf("%c",chuoi[i]);
+                }
+            printf("\nTen chu tai khoan: ");
+            for (int i=37 ;i<n ;i++)
+                {
+                    printf("%c",chuoi[i]);
+                }
+            printf("\nThoi diem tao QR: ");
+            for (int i=13;i<=14;i++)
+                {
+                    printf("%c",chuoi[i]);
+                }
+            printf("/");
+            for (int i=11;i<=12;i++)
+                {
+                    printf("%c",chuoi[i]);
+                }
+            printf("/");
+            for (int i=15;i<=18 ;i++)
+                {
+                    printf("%c",chuoi[i]);
+                }
+    }
+    else
+    if (strstr(chuoi,"HBB") != NULL) 
+    {   printf("Ngan hang: HBB \n");
+            printf("So tai khoan: ");
+            for (int i=(n-17);i<=(n-10);i++)
+                {
+                    printf("%c",chuoi[i]);
+                }
+            printf("\nTen chu tai khoan: ");
+            for (int i=11 ;i<=(n-18);i++)
+                {
+                    printf("%c",chuoi[i]);
+                }
+            printf("\nThoi diem tao QR: ");
+            for (int i=(n-5);i<=(n-4);i++)
+                {
+                    printf("%c",chuoi[i]);
+                }
+            printf("/");
+            for (int i=(n-7);i<=(n-6);i++)
+                {
+                    printf("%c",chuoi[i]);
+                }
+            printf("/20");
+            for (int i=(n-9);i<=(n-8) ;i++)
+                {
+                    printf("%c",chuoi[i]);
+                }
+    }
+}
+
+void convertQR() {
+    /*
+    Hint: 
+    - Look up for strcmp(), strlen(), strcpy(), strncpy()
+    */ 
+}
+
+void encryptQR() {
+    /*
+    Hint: 
+    - Look up for sprintf(), strcat(), strncat()
+    */ 
+}
+
+int main(){
+    int menu_code;
+    scanf("%d", &menu_code);
+    if(menu_code == 1) {
+        checkInfoQR(menu_code);
+    } else if (menu_code == 2) {
+        convertQR(menu_code);
+    } else {
+        encryptQR(menu_code);
+    }
+    return 0;
+}
