@@ -1,0 +1,590 @@
+#include<stdio.h>
+#include<string.h>
+
+void checkInfoQR(int a )
+{
+    int n;
+    char chuoi[100];
+    scanf("%s",chuoi);
+    n=strlen(chuoi);
+    if (strstr(chuoi,"BKB") != NULL) 
+    {   printf("Ngan hang: BKB \n");
+            printf("So tai khoan: ");
+            for (int i=14 ;i<=26;i++)
+                {
+                    printf("%c",chuoi[i]);
+                }
+            printf("\nTen chu tai khoan: ");
+            for (int i=27 ;i<=(n-9);i++)
+                {
+                    printf("%c",chuoi[i]);
+                }
+            printf("\nThoi diem tao QR: ");
+            for (int i=(n-8);i<=(n-7);i++)
+                {
+                    printf("%c",chuoi[i]);
+                }
+            printf("/");
+            for (int i=(n-6);i<=(n-5);i++)
+                {
+                    printf("%c",chuoi[i]);
+                }
+            printf("/");
+            for (int i=(n-4);i<n ;i++)
+                {
+                    printf("%c",chuoi[i]);
+                }
+    }
+    else    
+    if (strstr(chuoi,"KHB") != NULL) 
+    {   printf("Ngan hang: KHB \n");
+            printf("So tai khoan: ");
+            for (int i=22;i<=36;i++)
+                {
+                    printf("%c",chuoi[i]);
+                }
+            printf("\nTen chu tai khoan: ");
+            for (int i=37 ;i<n ;i++)
+                {
+                    printf("%c",chuoi[i]);
+                }
+            printf("\nThoi diem tao QR: ");
+            for (int i=13;i<=14;i++)
+                {
+                    printf("%c",chuoi[i]);
+                }
+            printf("/");
+            for (int i=11;i<=12;i++)
+                {
+                    printf("%c",chuoi[i]);
+                }
+            printf("/");
+            for (int i=15;i<=18 ;i++)
+                {
+                    printf("%c",chuoi[i]);
+                }
+    }
+    else
+    if (strstr(chuoi,"HBB") != NULL) 
+    {   printf("Ngan hang: HBB \n");
+            printf("So tai khoan: ");
+            for (int i=(n-17);i<=(n-10);i++)
+                {
+                    printf("%c",chuoi[i]);
+                }
+            printf("\nTen chu tai khoan: ");
+            for (int i=11 ;i<=(n-18);i++)
+                {
+                    printf("%c",chuoi[i]);
+                }
+            printf("\nThoi diem tao QR: ");
+            for (int i=(n-5);i<=(n-4);i++)
+                {
+                    printf("%c",chuoi[i]);
+                }
+            printf("/");
+            for (int i=(n-7);i<=(n-6);i++)
+                {
+                    printf("%c",chuoi[i]);
+                }
+            printf("/20");
+            for (int i=(n-9);i<=(n-8) ;i++)
+                {
+                    printf("%c",chuoi[i]);
+                }
+    }
+}
+
+void convertQR(int menu_code) {
+    
+    int n,j,k;
+    char ten[4];
+    scanf("%s",ten);
+    char a[100];
+    scanf("%s",a);
+    n=strlen(a);
+    if (strcmp(ten,"BKB")==0)
+    {
+        if (strstr(a,"BKB") != NULL)
+        {
+            printf("%s",a);
+        }
+        if (strstr(a,"KHB") != NULL) 
+        {   
+            for (int i=0;i<11;i++)//DTK//
+            {   
+                printf("%c",a[i]);
+            }
+            for (int i=19;i<22;i++)//TenNh//
+            {
+                printf("%c",a[i]);
+            }
+            for (int i=22;i<=36;i++)//STK//
+            {
+                printf("%c",a[i]);
+            }
+            for (int i=37 ;i<n ;i++)//Tenchu//
+            {
+                printf("%c",a[i]);
+            }
+            for (int i=13;i<=14;i++)//Ngay//
+            {
+                printf("%c",a[i]);
+            }
+            for (int i=11;i<=12;i++)//Thang//
+            {
+                printf("%c",a[i]);
+            }
+            for (int i=15;i<=18 ;i++)//Nam//
+            {
+                printf("%c",a[i]);
+            }
+        }
+        else
+        if (strstr(a,"HBB") != NULL) 
+        { 
+            for (int i=0;i<11;i++)
+            {   
+                printf("%c",a[i]);
+            }
+            for (int i=(n-3);i<n;i++)
+            {
+                printf("%c",a[i]);
+            }
+            for (int i=(n-17) ;i<(n-9) ;i++)
+            {
+                printf("%c",a[i]);
+            }
+            for (int i=11;i<=(n-18);i++)
+            {
+                printf("%c",a[i]);
+            }
+            for (int i=(n-5) ;i<(n-3) ;i++)
+            {
+                printf("%c",a[i]);
+            }
+            for (int i=(n-7);i<=(n-6);i++)
+            {
+                printf("%c",a[i]);
+            }
+            printf("20");
+            for (int i=(n-9);i<=(n-8);i++)
+            {
+                printf("%c",a[i]);
+            }
+        }
+        
+    }
+    else
+    if (strcmp(ten,"KHB")==0)
+    {
+        if (strstr(a,"BKB") != NULL) 
+        {
+            for (int i=0;i<11;i++)
+            {   
+                printf("%c",a[i]);
+            }
+            for (int i=(n-6);i<=(n-5);i++)
+            {
+                printf("%c",a[i]);    
+            }
+            for (int i=(n-8);i<=(n-7);i++)
+            {
+                printf("%c",a[i]);
+            }
+            for (int i=(n-4) ;i<n ;i++)
+            {
+                printf("%c",a[i]);
+            }
+            for (int i=11;i<=13;i++)
+            {
+                printf("%c",a[i]);
+            }
+            for (int i=14;i<=16;i++)
+            {
+                printf("%c",a[i]);
+            }
+            for (int i=17;i<=(n-9) ;i++)
+            {
+                printf("%c",a[i]);
+            }
+        }
+        else
+        if (strstr(a,"KHB") != NULL)
+        {
+            printf("%s",a);
+        }
+        if (strstr(a,"HBB") != NULL) 
+        { 
+            for (int i=0;i<11;i++)
+            {   
+                printf("%c",a[i]);
+            }
+            for (int i=(n-7);i<(n-3);i++)
+            {
+                printf("%c",a[i]);
+            }
+            printf("20");
+            for (int i=(n-9);i<=(n-8);i++)
+            {
+                printf("%c",a[i]);
+            }
+            for (int i=(n-3);i<n;i++)
+            {
+                printf("%c",a[i]);
+            }
+            for (int i=(n-17) ;i<(n-9) ;i++)
+            {
+                printf("%c",a[i]);
+            }
+            for (int i=11;i<(n-17) ;i++)
+            {
+                printf("%c",a[i]);
+            }
+           
+        }   
+    }
+    else
+    if (strcmp(ten,"HBB")==0)
+    {
+        if (strstr(a,"KHB") != NULL) 
+        {   
+            for (int i=0;i<11;i++)//DTK//
+            {   
+                printf("%c",a[i]);
+            }
+            for (int i=37 ;i<n ;i++)//Tenchu//
+            {
+                printf("%c",a[i]);
+            }
+            for (int i=22;i<=36;i++)//STK//
+            {
+                printf("%c",a[i]);
+            }
+            for (int i=17;i<=18 ;i++)//Nam//
+            {
+                printf("%c",a[i]);
+            }
+            for (int i=11;i<=12;i++)//Thang//
+            {
+                printf("%c",a[i]);
+            }
+            for (int i=13;i<=14;i++)//Ngay//
+            {
+                printf("%c",a[i]);
+            }
+            for (int i=19;i<22;i++)//TenNh//
+            {
+                printf("%c",a[i]);
+            }    
+        }
+        else
+        if (strstr(a,"BKB") != NULL) 
+        {   
+            for (int i=0;i<11;i++)
+            {   
+                printf("%c",a[i]);
+            }
+            for (int i=27;i<=(n-9) ;i++)
+            {
+                printf("%c",a[i]);
+            }
+            for (int i=14;i<=26;i++)
+            {
+                printf("%c",a[i]);
+            }
+            for (int i=(n-2) ;i<n ;i++)
+            {
+                printf("%c",a[i]);
+            }
+            for (int i=(n-6);i<=(n-5);i++)
+            {
+                printf("%c",a[i]);
+            }
+            for (int i=(n-8);i<=(n-7);i++)
+            {
+               printf("%c",a[i]);
+            }
+            
+            for (int i=11;i<=13;i++)
+            {
+                printf("%c",a[i]);
+            }
+        }
+        else
+        if (strstr(a,"HBB") != NULL)
+        {
+            printf("%s",a);
+        }
+    }    
+    else
+    {printf("Ngan hang chuyen den khong hop le");}
+
+   
+}
+
+void encryptQR(int menu_code)
+{
+    int a,b,c,n;
+    scanf("%d %d %d",&a,&b,&c);
+    if ((a!=0&&a!=1&&a!=2)||(b!=0&&b!=1)||(c!=0&&c!=1)) {printf("Thong so nhap vao khong hop le");}
+    char mang[100];
+    scanf("%s",mang);
+    n=strlen(mang);
+    char ten_KH[100];
+    char STK[100];
+    if (strstr(mang,"BKB") != NULL)
+        {
+            strncpy(ten_KH,mang+27,n-35);
+            strncpy(STK,mang+14,13);
+            ten_KH[n-35]='\0';
+            STK[13]='\0';
+        }
+    else
+    if (strstr(mang,"HBB") != NULL)
+        {   
+            strncpy(ten_KH,mang+11,n-28);
+            strncpy(STK,mang+n-17,8);
+            ten_KH[n-28]='\0';
+            STK[8]='\0';
+        }
+    else
+    if (strstr(mang,"KHB") != NULL)
+        {   
+            strncpy(STK, mang + 22,15);
+            strncpy(ten_KH, mang + 37, n - 37);
+            STK[15]='\0';
+            ten_KH[n - 37] = '\0';
+        }
+    int dodai1;
+    int dodai2;
+    dodai1=strlen(ten_KH);
+    dodai2=strlen(STK);
+    char tenchuTKMaHoa[100];
+    int j;
+    j=0;
+    if (a==1)
+    {   tenchuTKMaHoa[0]='\0';
+        for (int i=0;i < dodai1;i++)
+        {   
+            if (ten_KH[i]== 'A'){strcat(tenchuTKMaHoa,"65");}
+            if (ten_KH[i]== 'B'){strcat(tenchuTKMaHoa,"66");}
+            if (ten_KH[i]== 'C'){strcat(tenchuTKMaHoa,"67");}
+            if (ten_KH[i]== 'D'){strcat(tenchuTKMaHoa,"68");}
+            if (ten_KH[i]== 'E'){strcat(tenchuTKMaHoa,"69");}
+            if (ten_KH[i]== 'F'){strcat(tenchuTKMaHoa,"70");}
+            if (ten_KH[i]== 'G'){strcat(tenchuTKMaHoa,"71");}
+            if (ten_KH[i]== 'H'){strcat(tenchuTKMaHoa,"72");}
+            if (ten_KH[i]== 'I'){strcat(tenchuTKMaHoa,"73");}
+            if (ten_KH[i]== 'J'){strcat(tenchuTKMaHoa,"74");}
+            if (ten_KH[i]== 'K'){strcat(tenchuTKMaHoa,"75");}
+            if (ten_KH[i]== 'L'){strcat(tenchuTKMaHoa,"76");}
+            if (ten_KH[i]== 'M'){strcat(tenchuTKMaHoa,"77");}
+            if (ten_KH[i]== 'N'){strcat(tenchuTKMaHoa,"78");}
+            if (ten_KH[i]== 'O'){strcat(tenchuTKMaHoa,"79");}
+            if (ten_KH[i]== 'P'){strcat(tenchuTKMaHoa,"80");}
+            if (ten_KH[i]== 'Q'){strcat(tenchuTKMaHoa,"81");}
+            if (ten_KH[i]== 'R'){strcat(tenchuTKMaHoa,"82");}
+            if (ten_KH[i]== 'S'){strcat(tenchuTKMaHoa,"83");}
+            if (ten_KH[i]== 'T'){strcat(tenchuTKMaHoa,"84");}
+            if (ten_KH[i]== 'U'){strcat(tenchuTKMaHoa,"85");}
+            if (ten_KH[i]== 'V'){strcat(tenchuTKMaHoa,"86");}
+            if (ten_KH[i]== 'W'){strcat(tenchuTKMaHoa,"87");}
+            if (ten_KH[i]== 'X'){strcat(tenchuTKMaHoa,"88");}
+            if (ten_KH[i]== 'Y'){strcat(tenchuTKMaHoa,"89");}
+            if (ten_KH[i]== 'Z'){strcat(tenchuTKMaHoa,"90");}
+            if (ten_KH[i]== 'a'){strcat(tenchuTKMaHoa,"97");}
+            if (ten_KH[i]== 'b'){strcat(tenchuTKMaHoa,"98");}
+            if (ten_KH[i]== 'c'){strcat(tenchuTKMaHoa,"99");}
+            if (ten_KH[i]== 'd'){strcat(tenchuTKMaHoa,"100");}
+            if (ten_KH[i]== 'e'){strcat(tenchuTKMaHoa,"101");}
+            if (ten_KH[i]== 'f'){strcat(tenchuTKMaHoa,"102");}
+            if (ten_KH[i]== 'g'){strcat(tenchuTKMaHoa,"103");}
+            if (ten_KH[i]== 'h'){strcat(tenchuTKMaHoa,"104");}
+            if (ten_KH[i]== 'i'){strcat(tenchuTKMaHoa,"105");}
+            if (ten_KH[i]== 'j'){strcat(tenchuTKMaHoa,"106");}
+            if (ten_KH[i]== 'k'){strcat(tenchuTKMaHoa,"107");}
+            if (ten_KH[i]== 'l'){strcat(tenchuTKMaHoa,"108");}
+            if (ten_KH[i]== 'm'){strcat(tenchuTKMaHoa,"109");}
+            if (ten_KH[i]== 'n'){strcat(tenchuTKMaHoa,"110");}
+            if (ten_KH[i]== 'o'){strcat(tenchuTKMaHoa,"111");}
+            if (ten_KH[i]== 'p'){strcat(tenchuTKMaHoa,"112");}
+            if (ten_KH[i]== 'q'){strcat(tenchuTKMaHoa,"113");}
+            if (ten_KH[i]== 'r'){strcat(tenchuTKMaHoa,"114");}
+            if (ten_KH[i]== 's'){strcat(tenchuTKMaHoa,"115");}
+            if (ten_KH[i]== 't'){strcat(tenchuTKMaHoa,"116");}
+            if (ten_KH[i]== 'u'){strcat(tenchuTKMaHoa,"117");}
+            if (ten_KH[i]== 'v'){strcat(tenchuTKMaHoa,"118");}
+            if (ten_KH[i]== 'w'){strcat(tenchuTKMaHoa,"119");}
+            if (ten_KH[i]== 'x'){strcat(tenchuTKMaHoa,"120");}
+            if (ten_KH[i]== 'y'){strcat(tenchuTKMaHoa,"121");}
+            if (ten_KH[i]== 'z'){strcat(tenchuTKMaHoa,"122");} 
+        }
+        int k;
+        k=strlen(tenchuTKMaHoa);
+        tenchuTKMaHoa[k]='\0';
+    }
+    else
+    if (a==2)
+    {   tenchuTKMaHoa[0]='\0';
+        for (int i=0;i < dodai1;i++)
+        {   
+            if (ten_KH[i]== 'A'){strcat(tenchuTKMaHoa,"00");}
+            if (ten_KH[i]== 'B'){strcat(tenchuTKMaHoa,"01");}
+            if (ten_KH[i]== 'C'){strcat(tenchuTKMaHoa,"02");}
+            if (ten_KH[i]== 'D'){strcat(tenchuTKMaHoa,"03");}
+            if (ten_KH[i]== 'E'){strcat(tenchuTKMaHoa,"04");}
+            if (ten_KH[i]== 'F'){strcat(tenchuTKMaHoa,"05");}
+            if (ten_KH[i]== 'G'){strcat(tenchuTKMaHoa,"06");}
+            if (ten_KH[i]== 'H'){strcat(tenchuTKMaHoa,"07");}
+            if (ten_KH[i]== 'I'){strcat(tenchuTKMaHoa,"08");}
+            if (ten_KH[i]== 'J'){strcat(tenchuTKMaHoa,"09");}
+            if (ten_KH[i]== 'K'){strcat(tenchuTKMaHoa,"10");}
+            if (ten_KH[i]== 'L'){strcat(tenchuTKMaHoa,"11");}
+            if (ten_KH[i]== 'M'){strcat(tenchuTKMaHoa,"12");}
+            if (ten_KH[i]== 'N'){strcat(tenchuTKMaHoa,"13");}
+            if (ten_KH[i]== 'O'){strcat(tenchuTKMaHoa,"14");}
+            if (ten_KH[i]== 'P'){strcat(tenchuTKMaHoa,"15");}
+            if (ten_KH[i]== 'Q'){strcat(tenchuTKMaHoa,"16");}
+            if (ten_KH[i]== 'R'){strcat(tenchuTKMaHoa,"17");}
+            if (ten_KH[i]== 'S'){strcat(tenchuTKMaHoa,"18");}
+            if (ten_KH[i]== 'T'){strcat(tenchuTKMaHoa,"19");}
+            if (ten_KH[i]== 'U'){strcat(tenchuTKMaHoa,"20");}
+            if (ten_KH[i]== 'V'){strcat(tenchuTKMaHoa,"21");}
+            if (ten_KH[i]== 'W'){strcat(tenchuTKMaHoa,"22");}
+            if (ten_KH[i]== 'X'){strcat(tenchuTKMaHoa,"23");}
+            if (ten_KH[i]== 'Y'){strcat(tenchuTKMaHoa,"24");}
+            if (ten_KH[i]== 'Z'){strcat(tenchuTKMaHoa,"25");}
+            if (ten_KH[i]== 'a'){strcat(tenchuTKMaHoa,"26");}
+            if (ten_KH[i]== 'b'){strcat(tenchuTKMaHoa,"27");}
+            if (ten_KH[i]== 'c'){strcat(tenchuTKMaHoa,"28");}
+            if (ten_KH[i]== 'd'){strcat(tenchuTKMaHoa,"29");}
+            if (ten_KH[i]== 'e'){strcat(tenchuTKMaHoa,"30");}
+            if (ten_KH[i]== 'f'){strcat(tenchuTKMaHoa,"31");}
+            if (ten_KH[i]== 'g'){strcat(tenchuTKMaHoa,"32");}
+            if (ten_KH[i]== 'h'){strcat(tenchuTKMaHoa,"33");}
+            if (ten_KH[i]== 'i'){strcat(tenchuTKMaHoa,"34");}
+            if (ten_KH[i]== 'j'){strcat(tenchuTKMaHoa,"35");}
+            if (ten_KH[i]== 'k'){strcat(tenchuTKMaHoa,"36");}
+            if (ten_KH[i]== 'l'){strcat(tenchuTKMaHoa,"37");}
+            if (ten_KH[i]== 'm'){strcat(tenchuTKMaHoa,"38");}
+            if (ten_KH[i]== 'n'){strcat(tenchuTKMaHoa,"39");}
+            if (ten_KH[i]== 'o'){strcat(tenchuTKMaHoa,"40");}
+            if (ten_KH[i]== 'p'){strcat(tenchuTKMaHoa,"41");}
+            if (ten_KH[i]== 'q'){strcat(tenchuTKMaHoa,"42");}
+            if (ten_KH[i]== 'r'){strcat(tenchuTKMaHoa,"43");}
+            if (ten_KH[i]== 's'){strcat(tenchuTKMaHoa,"44");}
+            if (ten_KH[i]== 't'){strcat(tenchuTKMaHoa,"45");}
+            if (ten_KH[i]== 'u'){strcat(tenchuTKMaHoa,"46");}
+            if (ten_KH[i]== 'v'){strcat(tenchuTKMaHoa,"47");}
+            if (ten_KH[i]== 'w'){strcat(tenchuTKMaHoa,"48");}
+            if (ten_KH[i]== 'x'){strcat(tenchuTKMaHoa,"49");}
+            if (ten_KH[i]== 'y'){strcat(tenchuTKMaHoa,"50");}
+            if (ten_KH[i]== 'z'){strcat(tenchuTKMaHoa,"51");} 
+            
+        }
+        int k;
+        k=strlen(tenchuTKMaHoa);
+        tenchuTKMaHoa[k]='\0';
+        
+    }
+    else 
+    if( a==0) 
+        {
+            for (int i=0;i < dodai1;i++)
+            {tenchuTKMaHoa[i]=ten_KH[i];}
+        
+            tenchuTKMaHoa[dodai1]='\0';
+        } 
+    char chuoidaonguoc[dodai2];
+    if (b==0)
+        {
+            for (int i=0;i<dodai2;i++)
+                {chuoidaonguoc[i]=STK[i];}
+            chuoidaonguoc[dodai2]='\0';
+        }
+    else
+    if (b==1)
+    {   int j;
+        j=0;
+        for (int i=(dodai2-1);i>=0;i--)
+        {
+            chuoidaonguoc[j]=STK[i];
+            j++;
+        }
+        chuoidaonguoc[dodai2]='\0';
+        for (int i=0;i<(dodai2-1);i++)
+        {
+            STK[i]=chuoidaonguoc[i];
+        }
+    }
+    char mangcuoicung[200];
+    if (strstr(mang,"BKB") != NULL)
+        {
+            strncpy(mangcuoicung,mang,14);
+            mangcuoicung[14]='\0';
+            strcat(mangcuoicung,chuoidaonguoc);
+            strcat(mangcuoicung,tenchuTKMaHoa);
+            strncat(mangcuoicung,mang+n-8,8);
+        }
+    else
+    if (strstr(mang,"KHB") != NULL)
+        {
+            strncpy(mangcuoicung,mang,22);
+            mangcuoicung[22]='\0';
+            strcat(mangcuoicung,chuoidaonguoc);
+            strcat(mangcuoicung,tenchuTKMaHoa);
+        }
+    else
+    if (strstr(mang,"HBB") != NULL)
+        {
+            strncpy(mangcuoicung,mang,11);
+            mangcuoicung[11]='\0';
+            strcat(mangcuoicung,tenchuTKMaHoa);
+            strcat(mangcuoicung,chuoidaonguoc);
+            strncat(mangcuoicung,mang+n-9,9);
+        }
+    char bangchucai[62]={'A','a','B','b','C','c','D','d','E','e','F','f','G','g','H','h','I','i','J','j','K','k','L','l','M','m','N','n','O','o','P','p','Q','q','R','r','S','s','T','t','U','u','V','v','W','w','X','x','Y','y','Z','z','0','1','2','3','4','5','6','7','8','9'};
+    int dodoi,vitrimoi,vitricu;
+    int f,l;
+    l=strlen(tenchuTKMaHoa);
+    f=strlen(mangcuoicung);
+    if (c==0)
+    {printf("%s\n",mangcuoicung);}
+    if (c==1)
+    {   int j;
+        j=0;
+        dodoi=(11*l)% 62;
+        for (int i=0;i<f;i++)
+        {   for (int j=0;j<=62;j++)
+                {
+                    if (mangcuoicung[i]==bangchucai[j])
+                        {vitricu=j;}
+                }
+            vitrimoi=(vitricu+dodoi)% 62;
+            printf("%c",bangchucai[vitrimoi]);
+        }
+    }
+    
+    
+}
+int main(){
+    int menu_code;
+    scanf("%d", &menu_code);
+    if(menu_code == 1) 
+    {
+        checkInfoQR(menu_code);
+    } 
+    else 
+    if (menu_code == 2) 
+    {
+        convertQR(menu_code);
+    }
+    else 
+    if ( menu_code ==3)
+    {
+        encryptQR(menu_code);
+    } 
+    else {printf("Khong the hoan thanh");}
+    return 0;
+}

@@ -16,11 +16,12 @@ struct qrCode splitInfoQR(char *qr_mess)
     char *ptr_i;                          //pointer "runner" ~ index
 
     struct qrCode qr; // struct for return
+    strcpy(qr.dst, "00020101021");
+
     if (strstr(qr_mess, "BKB") != NULL) // bank()stk()owner()create_time
     {
         //Get bank field
         strcpy(qr.bank, "BKB");
-        printf("BKB\n");
         //Get stk field
         ptr_i = qr.stk;
         for (int i = 14; i <= 26; i++)
@@ -192,12 +193,97 @@ void checkInfoQR()
     printInfoQR(qr);
 }
 
+//Declare return form
+char newForm[100] = "";
+
+char *convertForm(char *dest_bank, struct qrCode qr)
+{
+    if (strcmp(dest_bank, "BKB") == 0)
+    {
+        strcat(newForm, qr.dst);
+        strcat(newForm, qr.bank);
+        strcat(newForm, qr.stk);
+        strcat(newForm, qr.owner);
+
+        //Concatenate create_time
+        strcat(newForm, qr.create_time);
+    }
+    else if (strcmp(dest_bank, "KHB") == 0)
+    {
+        strcat(newForm, qr.dst);
+
+        //Concatenate create_time
+        char *ptr_i = &newForm[10];
+        *(++ptr_i) = qr.create_time[2];
+        *(++ptr_i) = qr.create_time[3]; //mm
+
+        *(++ptr_i) = qr.create_time[0];
+        *(++ptr_i) = qr.create_time[1]; //dd
+
+        *(++ptr_i) = qr.create_time[4];
+        *(++ptr_i) = qr.create_time[5];
+        *(++ptr_i) = qr.create_time[6];
+        *(++ptr_i) = qr.create_time[7]; //yyyy
+
+        strcat(newForm, qr.bank);
+        strcat(newForm, qr.stk);
+        strcat(newForm, qr.owner);
+    }
+    else if (strcmp(dest_bank, "HBB") == 0)
+    {
+        strcat(newForm, qr.dst);
+        strcat(newForm, qr.owner);
+        strcat(newForm, qr.stk);
+
+        //Concatenate create_time
+        char *ptr_i = &newForm[strlen(newForm) - 1];
+        *(++ptr_i) = qr.create_time[6];
+        *(++ptr_i) = qr.create_time[7]; //yy
+
+        *(++ptr_i) = qr.create_time[2];
+        *(++ptr_i) = qr.create_time[3]; //mm
+
+        *(++ptr_i) = qr.create_time[0];
+        *(++ptr_i) = qr.create_time[1]; //dd
+
+        strcat(newForm, qr.bank);
+    }
+    else
+    {
+        strcpy(newForm, "Ngan hang chuyen den khong hop le");
+    }
+
+    return newForm;
+}
+
 void convertQR()
 {
     /*
     Hint: 
     - Look up for strcmp(), strlen(), strcpy(), strncpy()
     */
+    //Declare Menu_code and QR message
+    int menu_code;
+    char qr_mess[100];
+
+    //Input destination bank:
+    char dest_bank[4];
+    scanf("%s", dest_bank);
+
+    //Input QR message
+    scanf("%s", qr_mess);
+
+    //Declare qr struct
+    struct qrCode qr;
+    //split qr messages -> qRCode struct
+    qr = splitInfoQR(qr_mess);
+
+    //Convert form
+    char newForm[100];
+    strcpy(newForm, convertForm(dest_bank, qr));
+
+    //Print output
+    printf("%s", newForm);
 }
 
 void encryptQR()
