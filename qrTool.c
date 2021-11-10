@@ -285,11 +285,77 @@ void convertQR()
     printf("%s", newForm);
 }
 
-char returnEncrypt[100] = "";
-
-void encrypt_owner(int encrypt_para_owner)
+void encrypt_owner(char *owner, int encrypt_para_owner)
 {
-    strcpy(returnEncrypt, "ABC");
+    //Not encrypt
+    if (encrypt_para_owner == 0)
+        ;
+    else if (encrypt_para_owner == 1)
+    {
+        int owner_length = 0;
+        owner_length = strlen(owner);
+
+        char encoded_owner[100] = "";
+
+        int ascii;
+        char *ptr_i = &encoded_owner[strlen(encoded_owner)];
+
+        for (int i = 0; i < owner_length; ++i)
+        {
+            ascii = (int)(owner[i]);
+            ptr_i = &encoded_owner[strlen(encoded_owner)];
+            if (ascii >= 100)
+            {
+                *(ptr_i++) = '0' + (ascii / 100);
+                *(ptr_i++) = '0' + ((ascii % 100) - (ascii % 10)) / 10;
+            }
+            else
+                *(ptr_i++) = '0' + (ascii / 10);
+            *(ptr_i++) = '0' + (ascii % 10);
+        }
+        strcpy(owner, encoded_owner);
+    }
+    else if (encrypt_para_owner == 2)
+    {
+        int owner_length = 0;
+        owner_length = strlen(owner);
+
+        char encoded_owner[100] = "";
+
+        int ascii;
+        int encoded_num;
+        char *ptr_i = &encoded_owner[strlen(encoded_owner)];
+
+        for (int i = 0; i < owner_length; ++i)
+        {
+            ascii = (int)(owner[i]);
+            ptr_i = &encoded_owner[strlen(encoded_owner)];
+            if (ascii >= 65 && ascii <= 90)
+            {
+                encoded_num = owner[i] - 'A'; // 'C' - 'A' = 2
+                if (encoded_num < 10)
+                {
+                    *(ptr_i++) = '0';
+                    *(ptr_i++) = '0' + (encoded_num);
+                }
+                else
+                {
+                    *(ptr_i++) = '0' + (encoded_num / 10);
+                    *(ptr_i++) = '0' + (encoded_num % 10);
+                }
+            }
+            else if (ascii >= 97 && ascii <= 122)
+            {
+                encoded_num = owner[i] - 'a' + 26;
+                *(ptr_i++) = '0' + (encoded_num / 10);
+                *(ptr_i++) = '0' + (encoded_num % 10);
+            }
+        }
+        printf("\n");
+        strcpy(owner, encoded_owner);
+    }
+    else
+        return;
 }
 
 void encrypt_stk(int encrypt_para_skt)
@@ -302,14 +368,20 @@ void encrypt_qr(int encrypt_para_qr)
     ;
 }
 
+char returnEncrypt[100] = "";
 // Encrypt message
-char *encrypt(int encrypt_para_owner, int encrypt_para_stk, int encrypt_para_qr)
-{   
-    encrypt_owner(encrypt_para_owner);
+char *encrypt(struct qrCode *qr, int encrypt_para_owner, int encrypt_para_stk, int encrypt_para_qr)
+{
+    encrypt_owner(qr->owner, encrypt_para_owner);
     encrypt_stk(encrypt_para_qr);
     encrypt_qr(encrypt_para_qr);
 
-    
+    //return encrypt message
+    strcat(returnEncrypt, qr->dst);
+    strcat(returnEncrypt, qr->bank);
+    strcat(returnEncrypt, qr->stk);
+    strcat(returnEncrypt, qr->owner);
+    strcat(returnEncrypt, qr->create_time);
 
     return returnEncrypt;
 }
@@ -336,10 +408,9 @@ void encryptQR()
 
     //Encrypting ...
     char encoded_qr[100];
-    strcpy(encoded_qr, encrypt(encrypt_para_owner, encrypt_para_stk, encrypt_para_qr)); 
+    strcpy(encoded_qr, encrypt(&qr, encrypt_para_owner, encrypt_para_stk, encrypt_para_qr));
 
     //Print output
-    //printf("%d %d %d \n%s", encrypt_para_owner, encrypt_para_stk, encrypt_para_qr, qr_mess);
     printf("%s", encoded_qr);
 }
 
