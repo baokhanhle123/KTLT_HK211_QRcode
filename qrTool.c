@@ -262,8 +262,7 @@ void convertQR()
     Hint: 
     - Look up for strcmp(), strlen(), strcpy(), strncpy()
     */
-    //Declare Menu_code and QR message
-    int menu_code;
+    //Declare QR message
     char qr_mess[100];
 
     //Input destination bank:
@@ -286,12 +285,62 @@ void convertQR()
     printf("%s", newForm);
 }
 
+char returnEncrypt[100] = "";
+
+void encrypt_owner(int encrypt_para_owner)
+{
+    strcpy(returnEncrypt, "ABC");
+}
+
+void encrypt_stk(int encrypt_para_skt)
+{
+    ;
+}
+
+void encrypt_qr(int encrypt_para_qr)
+{
+    ;
+}
+
+// Encrypt message
+char *encrypt(int encrypt_para_owner, int encrypt_para_stk, int encrypt_para_qr)
+{   
+    encrypt_owner(encrypt_para_owner);
+    encrypt_stk(encrypt_para_qr);
+    encrypt_qr(encrypt_para_qr);
+
+    
+
+    return returnEncrypt;
+}
+
 void encryptQR()
 {
     /*
     Hint: 
     - Look up for sprintf(), strcat(), strncat()
     */
+    //Input encrypt_parameter
+    int encrypt_para_owner = 0;
+    int encrypt_para_stk = 0;
+    int encrypt_para_qr = 0;
+    scanf("%d%d%d", &encrypt_para_owner, &encrypt_para_stk, &encrypt_para_qr);
+
+    //Input QR message
+    char qr_mess[100];
+    scanf("%s", qr_mess);
+    //Declare qr struct
+    struct qrCode qr;
+    //split qr messages -> qRCode struct
+    qr = splitInfoQR(qr_mess);
+
+    //Encrypting ...
+    char encoded_qr[100];
+    strcpy(encoded_qr, encrypt(encrypt_para_owner, encrypt_para_stk, encrypt_para_qr)); 
+
+    //Print output
+    //printf("%d %d %d \n%s", encrypt_para_owner, encrypt_para_stk, encrypt_para_qr, qr_mess);
+    printf("%s", encoded_qr);
 }
 
 int main()
@@ -311,4 +360,11 @@ int main()
         encryptQR();
     }
     return 0;
+    /*char tenchuTKMaHoa[100] = ""; 
+
+    int ascii = (int)'A';
+    char *ptr_i = &tenchuTKMaHoa[strlen(tenchuTKMaHoa)];
+    *(ptr_i++) = '0' + (ascii / 10);
+    *(ptr_i++) = '0' + (ascii % 10);
+    printf("%s\n", tenchuTKMaHoa);*/
 }
