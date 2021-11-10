@@ -399,69 +399,6 @@ struct qrCode encrypt(struct qrCode qr, int encrypt_para_owner, int encrypt_para
     return encrypted_qr;
 }
 
-char qr_message[100] = "";
-char *qr2Message(struct qrCode qr)
-{
-    strcpy(qr_message, "");
-
-    if (strcmp(qr.bank, "BKB") == 0)
-    {
-        strcat(qr_message, qr.dst);
-        strcat(qr_message, qr.bank);
-        strcat(qr_message, qr.stk);
-        strcat(qr_message, qr.owner);
-
-        //Concatenate create_time
-        strcat(qr_message, qr.create_time);
-    }
-    else if (strcmp(qr.bank, "KHB") == 0)
-    {
-        strcat(qr_message, qr.dst);
-
-        //Concatenate create_time
-        char *ptr_i = &qr_message[10];
-        *(++ptr_i) = qr.create_time[2];
-        *(++ptr_i) = qr.create_time[3]; //mm
-
-        *(++ptr_i) = qr.create_time[0];
-        *(++ptr_i) = qr.create_time[1]; //dd
-
-        *(++ptr_i) = qr.create_time[4];
-        *(++ptr_i) = qr.create_time[5];
-        *(++ptr_i) = qr.create_time[6];
-        *(++ptr_i) = qr.create_time[7]; //yyyy
-
-        strcat(qr_message, qr.bank);
-        strcat(qr_message, qr.stk);
-        strcat(qr_message, qr.owner);
-    }
-    else if (strcmp(qr.bank, "HBB") == 0)
-    {
-        strcat(qr_message, qr.dst);
-        strcat(qr_message, qr.owner);
-        strcat(qr_message, qr.stk);
-
-        //Concatenate create_time
-        char *ptr_i = &qr_message[strlen(qr_message) - 1];
-        *(++ptr_i) = qr.create_time[6];
-        *(++ptr_i) = qr.create_time[7]; //yy
-
-        *(++ptr_i) = qr.create_time[2];
-        *(++ptr_i) = qr.create_time[3]; //mm
-
-        *(++ptr_i) = qr.create_time[0];
-        *(++ptr_i) = qr.create_time[1]; //dd
-
-        strcat(qr_message, qr.bank);
-    }
-    else
-    {
-        strcpy(qr_message, "Ngan hang chuyen den khong hop le");
-    }
-
-    return qr_message;
-}
-
 void encryptQR()
 {
     /*
