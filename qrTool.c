@@ -3,11 +3,11 @@
 
 struct qrCode
 {
-    char dst[12];
-    char stk[16];
-    char owner[31];
-    char bank[4];
-    char create_time[9];
+    char dst[100];
+    char stk[100];
+    char owner[100];
+    char bank[100];
+    char create_time[100];
 };
 
 struct qrCode splitInfoQR(char *qr_mess)
@@ -285,25 +285,28 @@ void convertQR()
     printf("%s", newForm);
 }
 
-void encrypt_owner(char *owner, int encrypt_para_owner)
+void encryptOwner(struct qrCode *qr, int encrypt_para_owner)
 {
     //Not encrypt
     if (encrypt_para_owner == 0)
+    {
         ;
+    }
+    //ASCII encrypt
     else if (encrypt_para_owner == 1)
     {
         int owner_length = 0;
-        owner_length = strlen(owner);
-
-        char encoded_owner[100] = "";
+        owner_length = strlen(qr->owner);
+        char original_owner[100];
+        strcpy(original_owner, qr->owner);
+        strcpy(qr->owner, "");
 
         int ascii;
-        char *ptr_i = &encoded_owner[strlen(encoded_owner)];
+        char *ptr_i = &qr->owner[0];
 
         for (int i = 0; i < owner_length; ++i)
         {
-            ascii = (int)(owner[i]);
-            ptr_i = &encoded_owner[strlen(encoded_owner)];
+            ascii = (int)(original_owner[i]);
             if (ascii >= 100)
             {
                 *(ptr_i++) = '0' + (ascii / 100);
@@ -311,28 +314,31 @@ void encrypt_owner(char *owner, int encrypt_para_owner)
             }
             else
                 *(ptr_i++) = '0' + (ascii / 10);
+
             *(ptr_i++) = '0' + (ascii % 10);
+            //printf("%s\n", qr->owner);
         }
-        strcpy(owner, encoded_owner);
+        *ptr_i = '\0';
+
+        //printf("%s\n", qr->owner);
     }
+    //Index encrypt
     else if (encrypt_para_owner == 2)
     {
         int owner_length = 0;
-        owner_length = strlen(owner);
+        owner_length = strlen(qr->owner);
+        char original_owner[100];
+        strcpy(original_owner, qr->owner);
+        strcpy(qr->owner, "");
 
-        char encoded_owner[100] = "";
-
-        int ascii;
         int encoded_num;
-        char *ptr_i = &encoded_owner[strlen(encoded_owner)];
+        char *ptr_i = &qr->owner[0];
 
         for (int i = 0; i < owner_length; ++i)
         {
-            ascii = (int)(owner[i]);
-            ptr_i = &encoded_owner[strlen(encoded_owner)];
-            if (ascii >= 65 && ascii <= 90)
+            if (original_owner[i] >= 'A' && original_owner[i] <= 'Z')
             {
-                encoded_num = owner[i] - 'A'; // 'C' - 'A' = 2
+                encoded_num = original_owner[i] - 'A'; // 'C' - 'A' = 2
                 if (encoded_num < 10)
                 {
                     *(ptr_i++) = '0';
@@ -344,18 +350,20 @@ void encrypt_owner(char *owner, int encrypt_para_owner)
                     *(ptr_i++) = '0' + (encoded_num % 10);
                 }
             }
-            else if (ascii >= 97 && ascii <= 122)
+            else if (original_owner[i] >= 'a' && original_owner[i] <= 'z')
             {
-                encoded_num = owner[i] - 'a' + 26;
+                encoded_num = original_owner[i] - 'a' + 26;
                 *(ptr_i++) = '0' + (encoded_num / 10);
                 *(ptr_i++) = '0' + (encoded_num % 10);
             }
+            //printf("%s\n", qr->owner);
         }
-        printf("\n");
-        strcpy(owner, encoded_owner);
+        *ptr_i = '\0';
+
+        //printf("%s\n", qr->owner);
     }
     else
-        return;
+        ;
 }
 
 void encrypt_stk(int encrypt_para_skt)
@@ -367,23 +375,91 @@ void encrypt_qr(int encrypt_para_qr)
 {
     ;
 }
-
-char returnEncrypt[100] = "";
 // Encrypt message
-char *encrypt(struct qrCode *qr, int encrypt_para_owner, int encrypt_para_stk, int encrypt_para_qr)
+struct qrCode encrypt(struct qrCode qr, int encrypt_para_owner, int encrypt_para_stk, int encrypt_para_qr)
 {
-    encrypt_owner(qr->owner, encrypt_para_owner);
-    encrypt_stk(encrypt_para_qr);
-    encrypt_qr(encrypt_para_qr);
 
-    //return encrypt message
-    strcat(returnEncrypt, qr->dst);
-    strcat(returnEncrypt, qr->bank);
-    strcat(returnEncrypt, qr->stk);
-    strcat(returnEncrypt, qr->owner);
-    strcat(returnEncrypt, qr->create_time);
+    struct qrCode encrypted_qr;       // struct for return
+    strcpy(encrypted_qr.dst, qr.dst); // struct for return
+    strcpy(encrypted_qr.stk, qr.stk);
+    strcpy(encrypted_qr.owner, qr.owner);
+    strcpy(encrypted_qr.bank, qr.bank);
+    strcpy(encrypted_qr.create_time, qr.create_time);
 
-    return returnEncrypt;
+    encryptOwner(&encrypted_qr, encrypt_para_owner);
+    //encrypt_stk(encrypt_para_qr);
+    //encrypt_qr(encrypt_para_qr);
+    /*printf("#################################################\n");
+    printf("%s\n", encrypted_qr.dst);
+    printf("%s\n", encrypted_qr.stk);
+    printf("%s\n", encrypted_qr.owner);
+    printf("%s\n", encrypted_qr.bank);
+    printf("%s\n", encrypted_qr.create_time);*/
+
+    return encrypted_qr;
+}
+
+char qr_message[100] = "";
+char *qr2Message(struct qrCode qr)
+{
+    strcpy(qr_message, "");
+
+    if (strcmp(qr.bank, "BKB") == 0)
+    {
+        strcat(qr_message, qr.dst);
+        strcat(qr_message, qr.bank);
+        strcat(qr_message, qr.stk);
+        strcat(qr_message, qr.owner);
+
+        //Concatenate create_time
+        strcat(qr_message, qr.create_time);
+    }
+    else if (strcmp(qr.bank, "KHB") == 0)
+    {
+        strcat(qr_message, qr.dst);
+
+        //Concatenate create_time
+        char *ptr_i = &qr_message[10];
+        *(++ptr_i) = qr.create_time[2];
+        *(++ptr_i) = qr.create_time[3]; //mm
+
+        *(++ptr_i) = qr.create_time[0];
+        *(++ptr_i) = qr.create_time[1]; //dd
+
+        *(++ptr_i) = qr.create_time[4];
+        *(++ptr_i) = qr.create_time[5];
+        *(++ptr_i) = qr.create_time[6];
+        *(++ptr_i) = qr.create_time[7]; //yyyy
+
+        strcat(qr_message, qr.bank);
+        strcat(qr_message, qr.stk);
+        strcat(qr_message, qr.owner);
+    }
+    else if (strcmp(qr.bank, "HBB") == 0)
+    {
+        strcat(qr_message, qr.dst);
+        strcat(qr_message, qr.owner);
+        strcat(qr_message, qr.stk);
+
+        //Concatenate create_time
+        char *ptr_i = &qr_message[strlen(qr_message) - 1];
+        *(++ptr_i) = qr.create_time[6];
+        *(++ptr_i) = qr.create_time[7]; //yy
+
+        *(++ptr_i) = qr.create_time[2];
+        *(++ptr_i) = qr.create_time[3]; //mm
+
+        *(++ptr_i) = qr.create_time[0];
+        *(++ptr_i) = qr.create_time[1]; //dd
+
+        strcat(qr_message, qr.bank);
+    }
+    else
+    {
+        strcpy(qr_message, "Ngan hang chuyen den khong hop le");
+    }
+
+    return qr_message;
 }
 
 void encryptQR()
@@ -407,11 +483,12 @@ void encryptQR()
     qr = splitInfoQR(qr_mess);
 
     //Encrypting ...
-    char encoded_qr[100];
-    strcpy(encoded_qr, encrypt(&qr, encrypt_para_owner, encrypt_para_stk, encrypt_para_qr));
+    struct qrCode encrypted_qr = encrypt(qr, encrypt_para_owner, encrypt_para_stk, encrypt_para_qr);
+    char encrypted_message[100];
+    strcpy(encrypted_message, convertForm(encrypted_qr.bank, encrypted_qr));
 
     //Print output
-    printf("%s", encoded_qr);
+    printf("%s", encrypted_message);
 }
 
 int main()
